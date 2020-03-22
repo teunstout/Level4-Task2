@@ -1,6 +1,13 @@
 <resources>
+    <!--    This is main view   -->
     <string name="app_name">Rock Paper Scissors</string>
+    <string name="textWelcome">Welcome</string>
+    <string name="textInstructions">instructions: Select rock, paper or scissors to play.</string>
+
+    <!--    this is game layout   -->
     <string name="textVersus">V.S.</string>
     <string name="textComputer">Computer</string>
     <string name="textPlayer">Player</string>
+
+
 </resources>

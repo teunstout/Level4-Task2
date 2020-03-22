@@ -4,68 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".GameActivity">
+
 
     <TextView
         android:id="@+id/TextWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome"
+        android:text="@string/textWelcome"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textExplanation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="@string/textInstructions"
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextWelcome" />
 
-    <Button
-        android:id="@+id/btnPaper"
+    <ImageView
+        android:id="@+id/imgButtonPaper"
         android:layout_width="125sp"
         android:layout_height="90sp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorAccent"
-        android:foreground="@drawable/paper"
-        android:foregroundGravity="center|fill"
-        android:freezesText="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnScissors"
+        app:layout_constraintEnd_toStartOf="@+id/imgButtonScissors"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnRock" />
+        app:layout_constraintStart_toEndOf="@+id/imgButtonRock"
+        app:srcCompat="@drawable/paper" />
 
-    <Button
-        android:id="@+id/btnRock"
+    <ImageView
+        android:id="@+id/imgButtonRock"
         android:layout_width="125sp"
         android:layout_height="90sp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorAccent"
-        android:foreground="@drawable/rock"
-        android:foregroundGravity="center|fill"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnPaper"
+        app:layout_constraintEnd_toStartOf="@+id/imgButtonPaper"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/rock" />
 
-    <Button
-        android:id="@+id/btnScissors"
+    <ImageView
+        android:id="@+id/imgButtonScissors"
         android:layout_width="125sp"
         android:layout_height="90sp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorAccent"
-        android:foreground="@drawable/scissors"
-        android:foregroundGravity="center|fill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnPaper" />
-
+        app:layout_constraintStart_toEndOf="@+id/imgButtonPaper"
+        app:srcCompat="@drawable/scissors" />
 </androidx.constraintlayout.widget.ConstraintLayout>
