@@ -58,7 +58,7 @@ class HistoryActivity : AppCompatActivity() {
                 coroutine.launch {
                     withContext(Dispatchers.IO) {
                         historyGameRepository.deleteAllGames()
-                        gameAdapter.notifyDataSetChanged()
+                        getPlayedGamesFromDatabase()
                     }
                 }
                 true
