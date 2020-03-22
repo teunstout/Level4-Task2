@@ -13,10 +13,10 @@ class HistoryGameRepository(context: Context) {
     }
 
     suspend fun getAllGames(): List<PlayedGame> =
-     itemDao.GetAllGames()
+     itemDao.getAllGames()
 
     suspend fun deleteAllGames() =
-     itemDao.DeleteAllGames()
+     itemDao.deleteAllGames()
 
     suspend fun saveGame(playedGame: PlayedGame) =
      itemDao.saveGame(playedGame)

@@ -9,10 +9,10 @@ import com.example.rockpaperscissors.model.PlayedGame
 interface GameDao {
 
     @Query("SELECT * FROM HistoryGame")
-    suspend fun GetAllGames(): List<PlayedGame>
+    suspend fun getAllGames(): List<PlayedGame>
 
     @Query("DELETE FROM HistoryGame")
-    suspend fun DeleteAllGames()
+    suspend fun deleteAllGames()
 
     @Insert
     suspend fun saveGame(playedGame: PlayedGame)
