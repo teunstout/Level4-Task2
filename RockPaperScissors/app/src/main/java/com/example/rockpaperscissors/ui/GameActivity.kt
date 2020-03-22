@@ -67,9 +67,8 @@ class GameActivity : AppCompatActivity() {
      */
     private fun updateView(thisGame: PlayedGame) {
         textWinner.text = thisGame.winner
-        // Don't set the time the game was played because that is not what we want
         imgComputer.setImageResource(thisGame.computerThrow)
-        imgComputer.setImageResource(thisGame.playerThrow)
+        imgPlayer.setImageResource(thisGame.playerThrow)
     }
 
     /**
