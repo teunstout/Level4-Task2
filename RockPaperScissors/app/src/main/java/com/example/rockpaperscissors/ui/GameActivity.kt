@@ -27,10 +27,6 @@ class GameActivity : AppCompatActivity() {
         R.drawable.scissors
     )
 
-    private lateinit var historyGameRepository: HistoryGameRepository
-    private var allGames = arrayListOf<PlayedGame>()
-    private val coroutine =  CoroutineScope(Dispatchers.Main)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
@@ -38,9 +34,6 @@ class GameActivity : AppCompatActivity() {
         imgButtonRock.setOnClickListener { checkAwnser(ROCK) }
         imgButtonPaper.setOnClickListener { checkAwnser(PAPER) }
         imgButtonScissors.setOnClickListener { checkAwnser(SCISSORS) }
-
-        historyGameRepository = HistoryGameRepository(this)
-        getShoppingListFromDatabase()
 
     }
 
@@ -53,26 +46,11 @@ class GameActivity : AppCompatActivity() {
     }
 
 
-    private fun getShoppingListFromDatabase() {
-        // corountine is een soort light weighted threath
-        coroutine.launch {
-            val playedGames: List<PlayedGame> = withContext(Dispatchers.IO) {
-                historyGameRepository.getAllGames()
-            }
-
-            this@GameActivity.allGames.clear()
-            this@GameActivity.allGames.addAll(playedGames)
-
-        }
-    }
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -83,7 +61,6 @@ class GameActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     private fun startActivity() {
         val intent = Intent(this, HistoryActivity::class.java)
