@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-@Parcelize
 @Entity(tableName = "HistoryGame")
 data class PlayedGame(
     val computerThrow: Int,
@@ -19,4 +18,4 @@ data class PlayedGame(
     @ColumnInfo(name = "id")
     var gameId: Long? = null
 
-) : Parcelable
+)

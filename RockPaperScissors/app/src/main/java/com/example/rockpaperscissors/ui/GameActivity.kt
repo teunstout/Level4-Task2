@@ -3,6 +3,7 @@ package com.example.rockpaperscissors.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import com.example.rockpaperscissors.R
@@ -19,19 +20,19 @@ import kotlin.math.floor
 
 
 const val SWITCH_TO_HISTORY = 100
-const val ROCK = 2
-const val PAPER = 1
-const val SCISSORS = 0
+
 
 class GameActivity : AppCompatActivity() {
+    private val ROCK = 2
+    private val PAPER = 1
+    private val SCISSORS = 0
     private lateinit var historyGameRepository: HistoryGameRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
 
-        // Instantiate the database repository
-        historyGameRepository = HistoryGameRepository(this)
+        historyGameRepository = HistoryGameRepository(this) // Instantiate the repository
 
         // Click listeners
         imgButtonRock.setOnClickListener { saveGame(ROCK) }
@@ -71,12 +72,18 @@ class GameActivity : AppCompatActivity() {
         imgComputer.setImageResource(thisGame.playerThrow)
     }
 
+    /**
+     * get the winner of the game
+     */
     private fun getWinnerText(awnserInIntForm: Int): String {
         return if (awnserInIntForm == 2 || awnserInIntForm == -1) "YOU WIN"
         else if (awnserInIntForm == 1 || awnserInIntForm == -2) "COMPUTER WINS"
         else "DRAW"
     }
 
+    /**
+     * return right drawable int
+     */
     private fun returnRightPicture(idFromPicture: Int): Int {
         return when (idFromPicture) {
             SCISSORS -> R.drawable.scissors
@@ -85,11 +92,17 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    /***
+     * set menu toolbar
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
+    /**
+     * menu actions
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.go_to_history -> {
@@ -100,6 +113,9 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * start the history intent
+     */
     private fun startActivity() {
         val intent = Intent(this, HistoryActivity::class.java)
         startActivityForResult(intent, SWITCH_TO_HISTORY)

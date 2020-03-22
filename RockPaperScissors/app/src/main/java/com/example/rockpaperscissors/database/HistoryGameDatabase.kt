@@ -12,11 +12,12 @@ abstract class HistoryGameDatabase: RoomDatabase() {
     abstract fun gameDao(): GameDao
 
     companion object {
-        private const val DATABASE_NAME = "HISTORY_GAME_DATABASE"
+        private const val DATABASE_NAME = "HISTORY_GAME_DATABASE" // name database
 
         @Volatile
         private var shoppingListRoomDatabaseInstance: HistoryGameDatabase? = null
 
+        // check if database is null and build one if that is true
         fun getDatabase(context: Context): HistoryGameDatabase? {
             if (shoppingListRoomDatabaseInstance == null) {
                 synchronized(HistoryGameDatabase::class.java) {
