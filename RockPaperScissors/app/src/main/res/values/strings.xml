@@ -3,11 +3,15 @@
     <string name="app_name">Rock Paper Scissors</string>
     <string name="textWelcome">Welcome</string>
     <string name="textInstructions">instructions: Select rock, paper or scissors to play.</string>
+    <string name="this_is_scissors">This Is Scissors</string>
+    <string name="this_is_rock">This is Rock</string>
+    <string name="this_is_paper">This Is Paper</string>
 
     <!--    this is game layout   -->
     <string name="textVersus">V.S.</string>
     <string name="textComputer">Computer</string>
     <string name="textPlayer">Player</string>
+
 
 
 </resources>
