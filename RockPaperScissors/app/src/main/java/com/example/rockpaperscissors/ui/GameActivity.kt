@@ -9,6 +9,7 @@ import com.example.rockpaperscissors.R
 import com.example.rockpaperscissors.database.HistoryGameRepository
 import com.example.rockpaperscissors.model.PlayedGame
 import kotlinx.android.synthetic.main.game_activity.*
+import kotlinx.android.synthetic.main.game_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,28 +30,45 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
 
+        // Instantiate the database repository
         historyGameRepository = HistoryGameRepository(this)
 
+        // Click listeners
         imgButtonRock.setOnClickListener { saveGame(ROCK) }
         imgButtonPaper.setOnClickListener { saveGame(PAPER) }
         imgButtonScissors.setOnClickListener { saveGame(SCISSORS) }
     }
 
+    /**
+     * Save the game to the database
+     */
     private fun saveGame(playerThrow: Int) {
-        val computerThrow = floor(Math.random() * 3).toInt()
+        val computerThrow = floor(Math.random() * 3).toInt()    // Computer throw 0-2
+        val thisGame = PlayedGame(
+            returnRightPicture(computerThrow),
+            returnRightPicture(playerThrow),
+            getWinnerText(playerThrow - computerThrow),
+            Date().toString()
+        )
 
+        updateView(thisGame) // set the view
+
+        // save the game to database
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                historyGameRepository.saveGame(
-                    PlayedGame(
-                        returnRightPicture(computerThrow),
-                        returnRightPicture(playerThrow),
-                        getWinnerText(playerThrow - computerThrow),
-                        Date().toString()
-                    )
-                )
+                historyGameRepository.saveGame(thisGame)
             }
         }
+    }
+
+    /**
+     * update the view
+     */
+    private fun updateView(thisGame: PlayedGame) {
+        textWinner.text = thisGame.winner
+        // Don't set the time the game was played because that is not what we want
+        imgComputer.setImageResource(thisGame.computerThrow)
+        imgComputer.setImageResource(thisGame.playerThrow)
     }
 
     private fun getWinnerText(awnserInIntForm: Int): String {

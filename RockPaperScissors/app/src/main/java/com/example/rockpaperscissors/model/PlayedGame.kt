@@ -10,11 +10,8 @@ import java.util.*
 @Parcelize
 @Entity(tableName = "HistoryGame")
 data class PlayedGame(
-//    @ColumnInfo(name = "date")
     val computerThrow: Int,
-//    @ColumnInfo(name = "date")
     val playerThrow: Int,
-//    @ColumnInfo(name = "date")
     val winner: String,
     val playedDate: String,
 
