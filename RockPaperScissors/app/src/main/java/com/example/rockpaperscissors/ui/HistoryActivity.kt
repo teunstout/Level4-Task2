@@ -11,8 +11,7 @@ class HistoryActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.history_activity)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -22,10 +21,13 @@ class HistoryActivity: AppCompatActivity() {
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem) {
         return when (item.itemId) {
             R.id.go_to_history -> {
-                true
+
+            }
+            R.id.home -> {
+               
             }
             else -> super.onOptionsItemSelected(item)
         }
