@@ -54,10 +54,11 @@ class HistoryActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.go_to_history -> {
+            R.id.delete_all_items -> {
                 coroutine.launch {
                     withContext(Dispatchers.IO) {
                         historyGameRepository.deleteAllGames()
+                        gameAdapter.notifyDataSetChanged()
                     }
                 }
                 true
