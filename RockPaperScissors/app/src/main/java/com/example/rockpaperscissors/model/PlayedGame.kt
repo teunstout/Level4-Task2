@@ -11,10 +11,11 @@ import java.util.*
 @Entity(tableName = "HistoryGame")
 data class PlayedGame(
 //    @ColumnInfo(name = "date")
-    val computerThrow: String,
+    val computerThrow: Int,
 //    @ColumnInfo(name = "date")
-    val playerThrow: String,
+    val playerThrow: Int,
 //    @ColumnInfo(name = "date")
+    val winner: String,
     val playedDate: String,
 
     @PrimaryKey(autoGenerate = true)

@@ -8,14 +8,14 @@ import com.example.rockpaperscissors.R
 import com.example.rockpaperscissors.model.PlayedGame
 import kotlinx.android.synthetic.main.game_layout.view.*
 
-class GameAdapter(val gamePlayed: List<PlayedGame>) :
+class GameAdapter(val allGamePlayed: List<PlayedGame>):
     RecyclerView.Adapter<GameAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(game: PlayedGame) {
-            itemView.textWinner.text = "winner"
-            itemView.textTimestamp.text = "winner"
-            itemView.imgComputer.setImageResource(R.drawable.paper)
-            itemView.imgPlayer.setImageResource(R.drawable.scissors)
+            itemView.textWinner.text = game.winner
+            itemView.textTimestamp.text = game.playedDate
+            itemView.imgComputer.setImageResource(game.computerThrow)
+            itemView.imgPlayer.setImageResource(game.playerThrow)
         }
     }
 
@@ -26,11 +26,11 @@ class GameAdapter(val gamePlayed: List<PlayedGame>) :
     }
 
     override fun getItemCount(): Int {
-        return gamePlayed.size
+        return allGamePlayed.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(gamePlayed[position])
+        holder.bind(allGamePlayed[position])
     }
 
 }

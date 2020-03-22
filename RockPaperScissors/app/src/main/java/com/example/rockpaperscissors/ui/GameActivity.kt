@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.rockpaperscissors.R
-import com.example.rockpaperscissors.database.HistoryGameDatabase
 import com.example.rockpaperscissors.database.HistoryGameRepository
 import com.example.rockpaperscissors.model.PlayedGame
 import kotlinx.android.synthetic.main.game_activity.*
@@ -14,40 +13,61 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.math.floor
 
 
 const val SWITCH_TO_HISTORY = 100
+const val ROCK = 2
+const val PAPER = 1
+const val SCISSORS = 0
+
 class GameActivity : AppCompatActivity() {
-    private val ROCK = "ROCK"
-    private val PAPER = "PAPER"
-    private val SCISSORS = "SCISSORS"
-    private val gamePictures = arrayListOf(
-        R.drawable.rock,
-        R.drawable.paper,
-        R.drawable.scissors
-    )
+    private lateinit var historyGameRepository: HistoryGameRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
 
-        imgButtonRock.setOnClickListener { checkAwnser(ROCK) }
-        imgButtonPaper.setOnClickListener { checkAwnser(PAPER) }
-        imgButtonScissors.setOnClickListener { checkAwnser(SCISSORS) }
+        historyGameRepository = HistoryGameRepository(this)
 
+        imgButtonRock.setOnClickListener { saveGame(ROCK) }
+        imgButtonPaper.setOnClickListener { saveGame(PAPER) }
+        imgButtonScissors.setOnClickListener { saveGame(SCISSORS) }
     }
 
-    private fun checkAwnser(awnser: String){
-        when(awnser){
-            ROCK -> {}
-            PAPER -> {}
-            SCISSORS -> {}
+    private fun saveGame(playerThrow: Int) {
+        val computerThrow = floor(Math.random() * 3).toInt()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                historyGameRepository.saveGame(
+                    PlayedGame(
+                        returnRightPicture(computerThrow),
+                        returnRightPicture(playerThrow),
+                        getWinnerText(playerThrow - computerThrow),
+                        Date().toString()
+                    )
+                )
+            }
         }
     }
 
+    private fun getWinnerText(awnserInIntForm: Int): String {
+        return if (awnserInIntForm == 2 || awnserInIntForm == -1) "YOU WIN"
+        else if (awnserInIntForm == 1 || awnserInIntForm == -2) "COMPUTER WINS"
+        else "DRAW"
+    }
+
+    private fun returnRightPicture(idFromPicture: Int): Int {
+        return when (idFromPicture) {
+            SCISSORS -> R.drawable.scissors
+            PAPER -> R.drawable.paper
+            else -> R.drawable.rock
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }

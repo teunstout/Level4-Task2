@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rockpaperscissors.R
 import com.example.rockpaperscissors.database.HistoryGameRepository
 import com.example.rockpaperscissors.model.PlayedGame
+import kotlinx.android.synthetic.main.history_activity.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,8 +16,9 @@ import kotlinx.coroutines.withContext
 
 class HistoryActivity : AppCompatActivity() {
     private lateinit var historyGameRepository: HistoryGameRepository
-    private val coroutine =  CoroutineScope(Dispatchers.Main)
+    private val coroutine = CoroutineScope(Dispatchers.Main)
     private var allGames = arrayListOf<PlayedGame>()
+    private val gameAdapter = GameAdapter(allGames)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,25 @@ class HistoryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         historyGameRepository = HistoryGameRepository(this)
-        getShoppingListFromDatabase()
+
+        initView()
+    }
+
+    private fun initView() {
+        getPlayedGamesFromDatabase()
+        rvPlayedGames.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvPlayedGames.adapter = gameAdapter
+    }
+
+    private fun getPlayedGamesFromDatabase() {
+        coroutine.launch {
+            val playedGames: List<PlayedGame> = withContext(Dispatchers.IO) {
+                historyGameRepository.getAllGames()
+            }
+            this@HistoryActivity.allGames.clear()
+            this@HistoryActivity.allGames.addAll(playedGames)
+            gameAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -31,25 +52,11 @@ class HistoryActivity : AppCompatActivity() {
         return true
     }
 
-
-    private fun getShoppingListFromDatabase() {
-        // corountine is een soort light weighted threath
-        coroutine.launch {
-            val playedGames: List<PlayedGame> = withContext(Dispatchers.IO) {
-                historyGameRepository.getAllGames()
-            }
-            this@HistoryActivity.allGames.clear()
-            this@HistoryActivity.allGames.addAll(playedGames)
-            // notify adapter
-
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.go_to_history -> {
                 coroutine.launch {
-                    withContext(Dispatchers.IO){
+                    withContext(Dispatchers.IO) {
                         historyGameRepository.deleteAllGames()
                     }
                 }
