@@ -3,7 +3,6 @@ package com.example.rockpaperscissors.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import com.example.rockpaperscissors.R
@@ -18,16 +17,14 @@ import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.math.floor
 
-
 const val SWITCH_TO_HISTORY = 100
-
 
 class GameActivity : AppCompatActivity() {
     private val ROCK = 2
     private val PAPER = 1
     private val SCISSORS = 0
-    private lateinit var historyGameRepository: HistoryGameRepository
 
+    private lateinit var historyGameRepository: HistoryGameRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
@@ -44,7 +41,7 @@ class GameActivity : AppCompatActivity() {
      * Save the game to the database
      */
     private fun saveGame(playerThrow: Int) {
-        val computerThrow = floor(Math.random() * 3).toInt()    // Computer throw 0-2
+        val computerThrow = floor(Math.random() * 3).toInt()
         val thisGame = PlayedGame(
             returnRightPicture(computerThrow),
             returnRightPicture(playerThrow),

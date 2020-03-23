@@ -25,6 +25,7 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(R.layout.history_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // set the back menu button
 
+
         historyGameRepository = HistoryGameRepository(this) // init repository
 
         initView()
