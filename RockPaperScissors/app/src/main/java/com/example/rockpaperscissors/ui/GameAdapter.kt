@@ -30,7 +30,7 @@ class GameAdapter(val allGamePlayed: List<PlayedGame>):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(allGamePlayed[position])
+        holder.bind(allGamePlayed[allGamePlayed.lastIndex - position])
     }
 
 }
