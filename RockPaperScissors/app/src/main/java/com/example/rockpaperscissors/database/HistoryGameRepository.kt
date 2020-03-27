@@ -5,20 +5,19 @@ import com.example.rockpaperscissors.model.PlayedGame
 
 class HistoryGameRepository(context: Context) {
 
-    private var itemDao: GameDao
+    private var gameDao: GameDao
 
     init {
         val database = HistoryGameDatabase.getDatabase(context)
-        itemDao = database!!.gameDao()
+        gameDao = database!!.gameDao()
     }
 
     suspend fun getAllGames(): List<PlayedGame> =
-     itemDao.getAllGames()
+     gameDao.getAllGames()
 
     suspend fun deleteAllGames() =
-     itemDao.deleteAllGames()
+     gameDao.deleteAllGames()
 
     suspend fun saveGame(playedGame: PlayedGame) =
-     itemDao.saveGame(playedGame)
-
+     gameDao.saveGame(playedGame)
 }
